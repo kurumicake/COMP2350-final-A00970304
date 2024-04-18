@@ -21,15 +21,35 @@
 								<th> Description </th>
 								<th> Cost </th>
 								<th> Quality </th>
+								<th>&nbsp; &nbsp;</th>
+								<th>&nbsp; &nbsp;</th>
 							</tr>
 							</thead>
 							<% let i=0; %>
-							<% for(i=0; i < getAllItems.length; i++) { %>
+							<% for(i=0; i < allItems.length; i++) { %>
 							<tr>
-								<td><%= getAllItems[i].item_name %></td>
-								<td><%= getAllItems[i].item_description %></td>
-								<td><%= getAllItems[i].cost %></td>
-								<td><%= getAllItems[i].quantity %></td>
+								<td><%= allItems[i].item_name %></td>
+								<td><%= allItems[i].item_description %></td>
+								<td><%= allItems[i].cost %></td>
+								<td><%= allItems[i].quantity %></td>
+								<td>
+									<a href="/moveItemUp?id=<%= allItems[i].purchase_item_id %>">
+									  <span class="icon is-small">
+										<i class="fas fa-caret-square-up"></i> </span
+									></a>
+								  </td>
+								<td>
+									<a href="/moveItemDown?id=<%= allItems[i].purchase_item_id %>">
+									  <span class="icon is-small">
+										<i class="fas fa-caret-square-down"></i> </span
+									></a>
+								  </td>
+								<td>
+									<a href="/deletePurchaseItem?id=<%= allUsers[i].purchase_item_id %>">
+									  <span class="icon is-small">
+										<i class="fas fa-user-times"></i> </span
+									></a>
+								  </td>
 							</tr>
 							<% } %>
 							<tfoot>
