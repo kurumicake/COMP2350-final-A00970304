@@ -1,20 +1,34 @@
 const database = require('./databaseConnection');
 
 async function getAllItems() {
-	let sqlQuery = `
+    let sqlQuery = `
         SELECT purchase_item_id, item_name, item_description, cost, quantity FROM purchase_item
     `;
 
-	try {
-		const results = await database.query(sqlQuery);
-		console.log(results);
-		return results;
-	}
-	catch (err) {
-		console.error("Error selecting from Purchase Item table", err);
-		throw err;
-	}
+    try {
+        const items = await database.query(sqlQuery);
+		console.log('Query result:', items);
+        let totalCost = items.reduce((acc, item) => {
+            const cost = parseFloat(item.cost);
+            const quantity = parseInt(item.quantity, 10);
+            if (isNaN(cost) || isNaN(quantity)) {
+                console.error(`Invalid cost or quantity for item ID ${item.purchase_item_id}`);
+                return acc;
+            }
+            return acc + (cost * quantity);
+        }, 0);
+        console.log('Items:', items);
+        console.log('Total Cost:', totalCost);
+        return { items, totalCost };
+    }
+    catch (err) {
+        console.error("Error selecting from Purchase Item table", err);
+        throw err;
+    }
 }
+
+
+
 
 async function moveItemUp(purchaseItemId) {
 	let sqlMoveUp = `

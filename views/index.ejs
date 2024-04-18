@@ -3,14 +3,19 @@
   <head>
     <meta charset="utf-8" />
     <link rel="stylesheet" href="bulma.min.css" />
+<<<<<<< HEAD
     <script
       defer
       src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"
     ></script>
+=======
+    <script defer src="https://use.fontawesome.com/releases/v5.3.1/js/all.js"></script>
+>>>>>>> 3ae8cce63e2f9b351f91b2680201d6d3bcd84f8d
   </head>
   <body>
     <section class="section">
       <div class="maincolumns columns is-desktop is-vcentered">
+<<<<<<< HEAD
         <div
           class="column is-10 is-offset-1 notification is-info is-light box container"
         >
@@ -68,6 +73,65 @@
               </tfoot>
             </table>
           </div>
+=======
+        <div class="column is-10 is-offset-1 notification is-info is-light box container">
+          <div class="title">Purchase Items</div>
+          <% if (allItems && allItems.items.length > 0) { %>
+            <div class="table-container">
+              <table class="table is-bordered is-hoverable is-striped is-narrow">
+                <thead>
+                  <tr>
+                    <th>Name</th>
+                    <th>Description</th>
+                    <th>Cost</th>
+                    <th>Quantity</th> 
+                    <th>&nbsp; &nbsp;</th>
+                    <th>&nbsp; &nbsp;</th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <% allItems.items.forEach(item => { %>
+                    <tr>
+                      <td><%= item.item_name %></td>
+                      <td><%= item.item_description %></td>
+                      <td><%= item.cost %></td>
+                      <td><%= item.quantity %></td>
+                      <td>
+                        <a href="/moveItemUp?id=<%= item.purchase_item_id %>">
+                          <span class="icon is-small">
+                            <i class="fas fa-caret-square-up"></i>
+                          </span>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="/moveItemDown?id=<%= item.purchase_item_id %>">
+                          <span class="icon is-small">
+                            <i class="fas fa-caret-square-down"></i>
+                          </span>
+                        </a>
+                      </td>
+                      <td>
+                        <a href="/deletePurchaseItem?id=<%= item.purchase_item_id %>">
+                          <span class="icon is-small">
+                            <i class="fas fa-trash"></i> 
+                          </span>
+                        </a>
+                      </td>
+                    </tr>
+                  <% }); %>
+                </tbody>
+                <tfoot>
+                  <tr>
+                    <td colspan="4"> 
+                      There are <%= allItems.items.length %> items for a total of $<%= allItems.totalCost.toFixed(2) %>.
+                    </td>
+                  </tr>
+                </tfoot>
+              </table>
+            </div>
+          <% } else { %>
+            <p>No items to display.</p>
+>>>>>>> 3ae8cce63e2f9b351f91b2680201d6d3bcd84f8d
           <% } %>
         </div>
       </div>
