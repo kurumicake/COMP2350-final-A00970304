@@ -3,19 +3,27 @@ const database = include('databaseConnection');
 const dbModel = include('databaseAccessLayer');
 
 router.get('/', async (req, res) => {
-	console.log("page hit");
-	
-	try {
-		const result = await dbModel.getAllItems();
-		res.render('index', {allItems: result});
-		console.log("here is result: ", result);
-	}
-	catch (err) {
-		res.render('error', {message: 'Error reading from MySQL'});
-		console.log("Error reading from mysql");
-		console.log(err);
-	}
+    console.log("page hit");
+    
+    try {
+        const items = await dbModel.getAllItems();
+        // ! Calculate the total cost here
+        const totalCost = items.reduce((acc, item) => {
+            return acc + (parseFloat(item.cost) * parseInt(item.quantity));
+        }, 0);
+
+        res.render('index', {
+            allItems: items,
+            totalCost: totalCost
+        });
+        console.log("here is result: ", items);
+    }
+    catch (err) {
+        res.render('error', {message: 'Error reading from MySQL'});
+        console.log("Error reading from mysql", err);
+    }
 });
+
 
 router.get('/moveItemUp', async (req, res) => {
 	console.log("Move Item Up");
