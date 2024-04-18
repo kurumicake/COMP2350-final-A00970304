@@ -7,19 +7,26 @@ async function getAllItems() {
 
     try {
         const items = await database.query(sqlQuery);
-        let totalCost = items.reduce((acc, item) => acc + (item.cost * item.quantity), 0);
+		console.log('Query result:', items);
+        let totalCost = items.reduce((acc, item) => {
+            const cost = parseFloat(item.cost);
+            const quantity = parseInt(item.quantity, 10);
+            if (isNaN(cost) || isNaN(quantity)) {
+                console.error(`Invalid cost or quantity for item ID ${item.purchase_item_id}`);
+                return acc;
+            }
+            return acc + (cost * quantity);
+        }, 0);
         console.log('Items:', items);
         console.log('Total Cost:', totalCost);
-        return {
-            items: items,     
-            totalCost: totalCost 
-        };
+        return { items, totalCost };
     }
     catch (err) {
         console.error("Error selecting from Purchase Item table", err);
         throw err;
     }
 }
+
 
 
 
