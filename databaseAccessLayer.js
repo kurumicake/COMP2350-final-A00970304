@@ -1,20 +1,27 @@
 const database = require('./databaseConnection');
 
 async function getAllItems() {
-	let sqlQuery = `
+    let sqlQuery = `
         SELECT purchase_item_id, item_name, item_description, cost, quantity FROM purchase_item
     `;
 
-	try {
-		const results = await database.query(sqlQuery);
-		console.log(results);
-		return results;
-	}
-	catch (err) {
-		console.error("Error selecting from Purchase Item table", err);
-		throw err;
-	}
+    try {
+        const items = await database.query(sqlQuery);
+        let totalCost = items.reduce((acc, item) => acc + (item.cost * item.quantity), 0);
+        console.log('Items:', items);
+        console.log('Total Cost:', totalCost);
+        return {
+            items: items,     
+            totalCost: totalCost 
+        };
+    }
+    catch (err) {
+        console.error("Error selecting from Purchase Item table", err);
+        throw err;
+    }
 }
+
+
 
 async function moveItemUp(purchaseItemId) {
 	let sqlMoveUp = `
