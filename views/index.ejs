@@ -20,22 +20,27 @@
 								<th> Name </th>
 								<th> Description </th>
 								<th> Cost </th>
-								<th> Quality </th>
+								<th> Quantity </th>
 							</tr>
 							</thead>
-							<% let i=0; %>
-							<% for(i=0; i < getAllItems.length; i++) { %>
-							<tr>
-								<td><%= getAllItems[i].item_name %></td>
-								<td><%= getAllItems[i].item_description %></td>
-								<td><%= getAllItems[i].cost %></td>
-								<td><%= getAllItems[i].quantity %></td>
-							</tr>
-							<% } %>
+							<tbody>
+								<% let totalCost = 0; %>
+								<% getAllItems.forEach(item => { %>
+								<tr>
+									<td><%= item.item_name %></td>
+									<td><%= item.item_description %></td>
+									<td><%= item.cost %></td>
+									<td><%= item.quantity %></td>
+								</tr>
+								<% totalCost += item.cost * item.quantity; %>
+								<% }); %>
+							</tbody>
 							<tfoot>
-								<tr> <td colspan="2">
-								There are <%= i %> items for a total of $ <%= sum(getAllItems[i].cost)%>>.
-								</td> </tr>
+								<tr> 
+									<td colspan="2">Total:</td>
+									<td>$<%= totalCost.toFixed(2) %></td>
+									<td><%= getAllItems.length %> items</td>
+								</tr>
 							</tfoot>
 						</table>
 						</div>
