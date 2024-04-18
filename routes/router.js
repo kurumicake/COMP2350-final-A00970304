@@ -8,9 +8,7 @@ router.get('/', async (req, res) => {
 	try {
 		const result = await dbModel.getAllItems();
 		res.render('index', {getAllItems: result});
-
-		//Output the results of the query to the Heroku Logs
-		console.log(result);
+		console.log(`this is my result: ${result}`);
 	}
 	catch (err) {
 		res.render('error', {message: 'Error reading from MySQL'});
